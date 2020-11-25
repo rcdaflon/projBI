@@ -12,7 +12,7 @@
         <% if(typeof content !== 'undefined') { %> 
             <div class="row">
                 <div class="col my-auto">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col" class="text-uppercase"><%= content.name %></th>
@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope="row">Quantidade de Alunos</th>
+                            <th scope="row" style="white-space: nowrap;">Quantidade de Alunos</th>
                             <% content.options.forEach(option => { %>
                                 <td><li id="<%=option.name%>" class="item" value="<%= option.value %>"><%= option.value %> (<%= ((option.value * 100) / total_alunos).toPrecision(2) %>%)</li></td>
                             <% }); %>

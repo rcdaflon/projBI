@@ -1,14 +1,10 @@
 const PORTA = 3500;
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 // View engine
 app.set('view engine', 'ejs');
 // Static
 app.use(express.static('public'));
-//Body parser
-app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
-app.use(bodyParser.json({ limit: '500mb' }));
 
 
 require("./routes/sexo.routes.js")(app);
