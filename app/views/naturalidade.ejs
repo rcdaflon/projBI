@@ -1,0 +1,90 @@
+<%- include ("./partials/header.ejs") %>
+    <div class="mt-5 ml-5">
+        <div class="row" >
+            <% if(typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger w-100 text-center" role="alert">
+                Ocorreu algum erro na leitura dos dados!
+            </div>
+            <% } %>
+        </div>
+
+        <% if(typeof content !== 'undefined') { %> 
+            <div class="row">
+                <div class="col my-auto" >
+                    <table class="table table-responsive"style="width: 25000px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <%var i = 0;%>
+                                <% content.options.forEach(option => { %>
+                                    <th>Opção <%= ++i %></th>
+                                <% }); %>
+                            </tr>
+                          <tr>
+                            <th scope="col" class="text-uppercase"><%= content.name %></th>
+                            <% content.options.forEach(option => { %>
+                                <th scope="col" style="white-space: nowrap;"><%= option.name1 %> - <%= option.name2 %></td>
+                            <% }); %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Quantidade de Alunos</th>
+                            <% content.options.forEach(option => { %>
+                                <td><li id="<%=option.name1%> - <%=option.name2%>" class="item" value="<%= option.value %>"><%= option.value %></li></td>
+                            <% }); %>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <dv class="row mt-5">
+                <div class="">
+                    <div class="ct-chart ct-perfect-fourth" style="width: 25000px; height: 1000px;"></div>
+               </div>
+            </div>
+        <% } %> 
+
+
+        
+
+    </div>
+<script>
+    escolaGraph();
+
+    document.getElementById("naturalidade").className = "active text-right";
+    
+
+    function escolaGraph(){
+
+        var quantidades = [];
+        var nomes = [];
+        var total = 0;
+        var j = 1; 
+
+        var itens = document.getElementsByClassName("item");
+        
+        for(var i = 0; i < itens.length; i++){
+            quantidades[i] = itens[i].value;
+            total += itens[i].value;
+        }
+        for(var i = 0; i < itens.length; i++){
+            nomes[i] = "Opção " + j; 
+            j++;
+        }
+        
+
+        new Chartist.Bar('.ct-chart', 
+            {
+                labels: nomes,
+                series: quantidades
+            }, 
+            {
+            distributeSeries: true,      
+        });
+
+
+
+    }
+</script>
+<%- include ("./partials/footer.ejs") %>

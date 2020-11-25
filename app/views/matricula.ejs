@@ -1,0 +1,103 @@
+<%- include ("./partials/header.ejs") %>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <% if(error) { %>
+            <div class="alert alert-danger w-100 text-center" role="alert">
+                Ocorreu algum erro na leitura dos dados!
+            </div>
+            <% } %>
+        </div>
+
+        <% if(typeof content !== 'undefined') { %> 
+            <div class="row">
+                <div class="col my-auto">
+                    <table class="table table-responsive">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th style="white-space: nowrap;">Opção 1</th>
+                                <th style="white-space: nowrap;">Opção 2</th>
+                                <th style="white-space: nowrap;">Opção 3</th>
+                                <th style="white-space: nowrap;">Opção 4</th>
+                                <th style="white-space: nowrap;">Opção 5</th>
+                                <th style="white-space: nowrap;">Opção 6</th>
+                                <th style="white-space: nowrap;">Opção 7</th>
+                                <th style="white-space: nowrap;">Opção 8</th>
+                                <th style="white-space: nowrap;">Opção 9</th>
+                                <th style="white-space: nowrap;">Opção 10</th>
+                                <th style="white-space: nowrap;">Opção 11</th>
+                                <th style="white-space: nowrap;">Opção 12</th>
+                                <th style="white-space: nowrap;">Opção 13</th>
+                                <th style="white-space: nowrap;">Opção 14</th>
+                                <th style="white-space: nowrap;">Opção 15</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="text-uppercase"><%= content.name %></th>
+                                <% content.options.forEach(option => { %>
+                                    <th scope="col" style="white-space: nowrap;"><%= option.name %></td>
+                                <% }); %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Quantidade de Alunos</th>
+                            <% content.options.forEach(option => { %>
+                                <td><li id="<%=option.name%>" class="item" value="<%= option.value %>"><%= option.value %></li></td>
+                            <% }); %>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <dv class="row mt-5 mb-5">
+                <div class="mx-auto col-md-4 col-lg-8">
+                    <div class="ct-chart ct-perfect-fourth"></div>
+               </div>
+            </div>
+        <% } %> 
+
+
+        
+
+    </div>
+<script>
+    matriculaGraph();
+
+    document.getElementById("matricula").className = "active text-right";
+    
+
+    function matriculaGraph(){
+        var quantidades = [];
+        var nomes = [];
+        var total = 0;
+        var j = 1; 
+
+        var itens = document.getElementsByClassName("item");
+        
+        for(var i = 0; i < itens.length; i++){
+            quantidades[i] = itens[i].value;
+            total += itens[i].value;
+        }
+        for(var i = 0; i < itens.length; i++){
+            nomes[i] = "Opcao " + j + ": " + ((quantidades[i] * 100) / total).toPrecision(2) + "%"; 
+            j++;
+        }
+        
+
+        new Chartist.Bar('.ct-chart', 
+            {
+                labels: nomes,
+                series: [quantidades]
+            }, 
+            {
+                seriesBarDistance: 20,
+                reverseData: true,
+                horizontalBars: true,
+                axisY: {
+                    offset: 70
+                }        
+        });
+    }
+</script>
+<%- include ("./partials/footer.ejs") %>

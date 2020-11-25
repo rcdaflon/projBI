@@ -1,0 +1,80 @@
+<%- include ("./partials/header.ejs") %>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <% if(error) { %>
+            <div class="alert alert-danger w-100 text-center" role="alert">
+                Ocorreu algum erro na leitura dos dados!
+            </div>
+            <% } %>
+        </div>
+
+        <% if(typeof content !== 'undefined') { %> 
+            <div class="row">
+                <div class="col my-auto">
+                    <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col" class="text-uppercase"><%= content.name %></th>
+                            <% content.options.forEach(option => { %>
+                                <th scope="col" style="white-space: nowrap;"><%= option.name %></th>
+                            <% }); %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Quantidade de Alunos</th>
+                            <% content.options.forEach(option => { %>
+                                <td><li id="<%=option.name%>" class="item" value="<%= option.value %>"><%= option.value %></li></td>
+                            <% }); %>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <dv class="row mt-5">
+                <div class="mx-auto col-md-4 col-lg-8">
+                    <div class="ct-chart ct-perfect-fourth"></div>
+               </div>
+            </div>
+        <% } %> 
+    </div>
+<script>
+    sexoGraph();
+
+    document.getElementById("sexo").className = "active text-right";
+    
+
+    function sexoGraph(){
+
+        var quantidades = [];
+        var nomes = [];
+        var total = 0;
+        var j = 1; 
+
+        var itens = document.getElementsByClassName("item");
+        
+        for(var i = 0; i < itens.length; i++){
+            quantidades[i] = itens[i].value;
+            total += itens[i].value;
+        }
+        
+        var i = -1;
+        var data = {
+            // labels: ["Homens", "Mulheres"],
+            series: quantidades
+        };
+        var sum = function(a, b) { return a + b };
+        new Chartist.Pie('.ct-chart', 
+            {
+                //labels: nomes,
+                series: quantidades
+            }, 
+            {
+                labelInterpolationFnc: function(value) {
+                return itens[++i].id + ": " + Math.round(value / data.series.reduce(sum) * 100) + '%';
+            }       
+        });
+    }
+</script>
+<%- include ("./partials/footer.ejs") %>

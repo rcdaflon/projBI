@@ -1,0 +1,57 @@
+<div id="show-sidebar" class="btn btn-sm btn-dark">
+    <i class="fa fa-bars"></i>
+</div>
+<nav id="sidebar" class="sidebar-wrapper" >
+    <div class="sidebar-content">
+        <div class="sidebar-header text-white">
+            <% if(typeof total_alunos !== 'undefined') { %> 
+            <span>
+                <i class="fa fa-users "></i>&nbsp;&nbsp;<%= total_alunos %> Alunos
+            </span>
+        <% } %> 
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li class="header-menu">
+                    <span>Quantitativo por: </span>
+                </li>
+                <li id="sexo" class="text-center">
+                    <a href="/sexo">
+                        <span>Sexo</span>
+                    </a>
+                </li>
+                <li id="etnia" class="text-center">
+                    <a href="/etnia">
+                        <span>Etnia</span>
+                    </a>
+                </li>
+                <li id="escola" class="text-center">
+                    <a href="/escola">
+                        <span>Escola</span>
+                    </a>
+                </li>
+                <li id="renda" class="text-center">
+                    <a href="/renda">
+                        <span>Renda Familiar</span>
+                    </a>
+                </li>
+                <li id="naturalidade" class="text-center">
+                    <a href="/naturalidade">
+                        <span>Naturalidade</span>
+                    </a>
+                </li>
+                <li id="etaria" class="text-center">
+                    <a href="/etaria">
+                        <span>Faixa Etária</span>
+                    </a>
+                </li>
+                <li id="matricula" class="text-center">
+                    <a href="/matricula">
+                        <span>Situação Matrícula</span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>

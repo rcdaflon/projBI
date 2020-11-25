@@ -1,0 +1,109 @@
+<%- include ("./partials/header.ejs") %>
+    <div class="container mt-5">
+        <div class="row">
+            <% if(error) { %>
+            <div class="alert alert-danger w-100 text-center" role="alert">
+                Ocorreu algum erro na leitura dos dados!
+            </div>
+            <% } %>
+        </div>
+
+        <% if(typeof content !== 'undefined') { %> 
+            <div class="row">
+                <div class="col my-auto mx-auto">
+                    <table class="table table-responsive">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Opção 1</th>
+                                <th>Opção 2</th>
+                                <th>Opção 3</th>
+                                <th>Opção 4</th>
+                                <th>Opção 5</th>
+                                <th>Opção 6</th>
+                                <th>Opção 7</th>
+                                <th>Opção 8</th>
+                                <th>Opção 9</th>
+                                <th>Opção 10</th>
+                                <th>Opção 11</th>
+                                <th>Opção 12</th>
+                                <th>Opção 13</th>
+                                <th>Opção 14</th>
+                                <th>Opção 15</th>
+                                <th>Opção 16</th>
+                                <th>Opção 17</th>
+                                <th>Opção 18</th>
+                                <th>Opção 19</th>
+                                <th>Opção 20</th>
+                                <th>Opção 21</th>
+                            </tr>
+                          <tr>
+                            <th scope="col" class="text-uppercase"><%= content.name %></th>
+                            <% content.options.forEach(option => { %>
+                                <th scope="col" style="white-space: nowrap;"><%= option.name %></td>
+                            <% }); %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Quantidade de Alunos</th>
+                            <% content.options.forEach(option => { %>
+                                <td><li id="<%=option.name%>" class="item" value="<%= option.value %>"><%= option.value %></li></td>
+                            <% }); %>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <dv class="row mt-5">
+                <div class="mx-auto col-md-4 col-lg-8">
+                    <div class="ct-chart ct-perfect-fourth"></div>
+               </div>
+            </div>
+        <% } %> 
+
+
+        
+
+    </div>
+<script>
+    document.getElementById("renda").className = "active text-right";
+    rendaGraph();
+   
+
+    function rendaGraph(){
+        var quantidades = [];
+        var nomes = [];
+        var total = 0;
+        var j = 1; 
+
+        var itens = document.getElementsByClassName("item");
+        
+        for(var i = 0; i < itens.length; i++){
+            quantidades[i] = itens[i].value;
+            total += itens[i].value;
+        }
+        for(var i = 0; i < itens.length; i++){
+            nomes[i] = "Opção " + j + ": " + ((quantidades[i] * 100) / total).toPrecision(2) + "%"; 
+            j++;
+        }
+        
+
+        new Chartist.Bar('.ct-chart', 
+            {
+                labels: nomes,
+                series: [quantidades]
+            }, 
+            {
+                seriesBarDistance: 20,
+                reverseData: true,
+                horizontalBars: true,
+                axisY: {
+                    offset: 70
+                }        
+        });
+
+
+    }
+</script>
+<%- include ("./partials/footer.ejs") %>
